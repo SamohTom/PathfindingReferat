@@ -93,16 +93,22 @@ export class TestScene extends Phaser.Scene {
 
     findPath(start: Positions, end: Positions){
         var newGrid = [];
+        var open = []
         for(var y = 0; y < this.tileMap.height; y++){
             var col = [];
             for(var x = 0; x < this.tileMap.width; x++){
                 var index = this.baseMap.getTileAt(x, y).index;
                 var marked = false;
-                if(index == 20)marked = true;
+                if(index == 20){
+                    marked = true
+                }else{
+                    open.push(new Node(-1, new Positions(x, y)))
+                }
                 col.push([index, marked, -1]);
+                
             }
         newGrid.push(col);
-    }
+        }
     //create 2D Arry based on our Tilemap 
     //grid[y][x]
 
@@ -113,7 +119,7 @@ export class TestScene extends Phaser.Scene {
         if(!finalGrid){
             return [];
         }
-
+        
         //tracking the path
         var path = this.findPathRekursiv(finalGrid, end);
         console.log(path);
@@ -122,7 +128,6 @@ export class TestScene extends Phaser.Scene {
         });
         return path;
         
-
 
     }
 
@@ -155,11 +160,20 @@ export class TestScene extends Phaser.Scene {
                 return newPosition
             }
         }
+
     }
    
 
-    aStar(){
+    // aStar(start:Positions, target: Positions, open){
+    //     var closed: Node[]
         
+    //     while(open.length)
+    // }
+
+    calculateHCost(start:Positions, target: Positions): number{
+        let dX = target.x - start.x
+        let dY = target.y - start.y
+        return Math.sqrt(dX**2 + dY**2)
     }
 
     lee(start:Positions, target: Positions, grid){
@@ -202,7 +216,6 @@ export class TestScene extends Phaser.Scene {
             // grid[curr.y][curr.x][1] = true
             this.tileMap.putTileAt(132, curr.x, curr.y)
             this.add.text(curr.x * 32 + 8, curr.y*32 + 8, ""+grid[curr.y][curr.x][2])
-            
         }
         return false;
 
@@ -223,3 +236,10 @@ class Positions{
         return(pos2.x == this.x && pos2.y == this.y);
     }
 }
+
+class Node{
+    constructor(public fCost: number, public pos: Positions, public parent?: Node){
+
+    }
+}
+

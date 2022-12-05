@@ -11,7 +11,7 @@ var config: Phaser.Types.Core.GameConfig = {
     },
     parent: 'game',
     scene: [
-        new TestScene1()
+        new TestScene()
     ],
     physics: {
       default: "arcade",

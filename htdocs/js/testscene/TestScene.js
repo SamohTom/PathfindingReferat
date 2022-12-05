@@ -59,13 +59,18 @@ export class TestScene extends Phaser.Scene {
     }
     findPath(start, end) {
         var newGrid = [];
+        var open = [];
         for (var y = 0; y < this.tileMap.height; y++) {
             var col = [];
             for (var x = 0; x < this.tileMap.width; x++) {
                 var index = this.baseMap.getTileAt(x, y).index;
                 var marked = false;
-                if (index == 20)
+                if (index == 20) {
                     marked = true;
+                }
+                else {
+                    open.push(new Node(-1, new Positions(x, y)));
+                }
                 col.push([index, marked, -1]);
             }
             newGrid.push(col);
@@ -112,7 +117,14 @@ export class TestScene extends Phaser.Scene {
             }
         }
     }
-    aStar() {
+    // aStar(start:Positions, target: Positions, open){
+    //     var closed: Node[]
+    //     while(open.length)
+    // }
+    calculateHCost(start, target) {
+        let dX = target.x - start.x;
+        let dY = target.y - start.y;
+        return Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
     }
     lee(start, target, grid) {
         var todo = [start];
@@ -178,6 +190,13 @@ class Positions {
     }
     isEqual(pos2) {
         return (pos2.x == this.x && pos2.y == this.y);
+    }
+}
+class Node {
+    constructor(fCost, pos, parent) {
+        this.fCost = fCost;
+        this.pos = pos;
+        this.parent = parent;
     }
 }
 //# sourceMappingURL=TestScene.js.map
