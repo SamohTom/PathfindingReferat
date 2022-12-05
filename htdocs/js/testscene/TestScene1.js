@@ -1,4 +1,4 @@
-export class TestScene extends Phaser.Scene {
+export class TestScene1 extends Phaser.Scene {
     constructor() {
         super({
             key: "Testscene"
@@ -118,52 +118,59 @@ export class TestScene extends Phaser.Scene {
         var todo = [start];
         grid[start.y][start.x][1] = true;
         grid[start.y][start.x][2] = 0;
-        while (todo.length != 0) {
-            var curr = todo.shift();
-            if (curr.isEqual(target)) {
-                console.log(grid);
-                this.tileMap.putTileAt(62, curr.x, curr.y);
-                return grid;
-            }
-            else {
-                try {
-                    if (!grid[curr.y - 1][curr.x][1]) { //oben
-                        grid[curr.y - 1][curr.x][1] = true;
-                        grid[curr.y - 1][curr.x][2] = grid[curr.y][curr.x][2] + 1;
-                        todo.push(new Positions(curr.x, curr.y - 1));
-                    }
-                }
-                catch (_a) { }
-                try {
-                    if (!grid[curr.y + 1][curr.x][1]) { //unten
-                        grid[curr.y + 1][curr.x][1] = true;
-                        grid[curr.y + 1][curr.x][2] = grid[curr.y][curr.x][2] + 1;
-                        todo.push(new Positions(curr.x, curr.y + 1));
-                    }
-                }
-                catch (_b) { }
-                try {
-                    if (!grid[curr.y][curr.x - 1][1]) { //links
-                        grid[curr.y][curr.x - 1][1] = true;
-                        grid[curr.y][curr.x - 1][2] = grid[curr.y][curr.x][2] + 1;
-                        todo.push(new Positions(curr.x - 1, curr.y));
-                    }
-                }
-                catch (_c) { }
-                try {
-                    if (!grid[curr.y][curr.x + 1][1]) { //rechts
-                        grid[curr.y][curr.x + 1][1] = true;
-                        grid[curr.y][curr.x + 1][2] = grid[curr.y][curr.x][2] + 1;
-                        todo.push(new Positions(curr.x + 1, curr.y));
-                    }
-                }
-                catch (_d) { }
-            }
-            // grid[curr.y][curr.x][1] = true
-            this.tileMap.putTileAt(132, curr.x, curr.y);
-            this.add.text(curr.x * 32 + 8, curr.y * 32 + 8, "" + grid[curr.y][curr.x][2]);
-        }
+        this.innerLee(todo, grid, target);
         return false;
+    }
+    innerLee(todo, grid, target) {
+        if (todo.length == 0)
+            return;
+        var curr = todo.shift();
+        if (curr.isEqual(target)) {
+            console.log(grid);
+            this.tileMap.putTileAt(62, curr.x, curr.y);
+            return grid;
+        }
+        else {
+            try {
+                if (!grid[curr.y - 1][curr.x][1]) { //oben
+                    grid[curr.y - 1][curr.x][1] = true;
+                    grid[curr.y - 1][curr.x][2] = grid[curr.y][curr.x][2] + 1;
+                    todo.push(new Positions(curr.x, curr.y - 1));
+                }
+            }
+            catch (_a) { }
+            try {
+                if (!grid[curr.y + 1][curr.x][1]) { //unten
+                    grid[curr.y + 1][curr.x][1] = true;
+                    grid[curr.y + 1][curr.x][2] = grid[curr.y][curr.x][2] + 1;
+                    todo.push(new Positions(curr.x, curr.y + 1));
+                }
+            }
+            catch (_b) { }
+            try {
+                if (!grid[curr.y][curr.x - 1][1]) { //links
+                    grid[curr.y][curr.x - 1][1] = true;
+                    grid[curr.y][curr.x - 1][2] = grid[curr.y][curr.x][2] + 1;
+                    todo.push(new Positions(curr.x - 1, curr.y));
+                }
+            }
+            catch (_c) { }
+            try {
+                if (!grid[curr.y][curr.x + 1][1]) { //rechts
+                    grid[curr.y][curr.x + 1][1] = true;
+                    grid[curr.y][curr.x + 1][2] = grid[curr.y][curr.x][2] + 1;
+                    todo.push(new Positions(curr.x + 1, curr.y));
+                }
+            }
+            catch (_d) { }
+        }
+        // grid[curr.y][curr.x][1] = true
+        this.tileMap.putTileAt(132, curr.x, curr.y);
+        this.add.text(curr.x * 32 + 8, curr.y * 32 + 8, "" + grid[curr.y][curr.x][2]);
+        let that = this;
+        setInterval(() => {
+            that.innerLee(todo, grid, target);
+        }, 700);
     }
     convertCoordinates(obj) {
         let curX = this.tileMap.getTileAtWorldXY(obj.x, obj.y).x;
@@ -180,4 +187,4 @@ class Positions {
         return (pos2.x == this.x && pos2.y == this.y);
     }
 }
-//# sourceMappingURL=TestScene.js.map
+//# sourceMappingURL=TestScene1.js.map

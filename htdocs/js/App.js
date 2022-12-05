@@ -1,4 +1,4 @@
-import { TestScene } from "./testscene/TestScene.js";
+import { TestScene1 } from "./testscene/TestScene1.js";
 var config = {
     width: 640,
     height: 640,
@@ -8,7 +8,7 @@ var config = {
     },
     parent: 'game',
     scene: [
-        new TestScene()
+        new TestScene1()
     ],
     physics: {
         default: "arcade",

@@ -180,4 +180,4 @@ class Positions {
         return (pos2.x == this.x && pos2.y == this.y);
     }
 }
-//# sourceMappingURL=TestScene.js.map
+//# sourceMappingURL=TestScene%20copy.js.map

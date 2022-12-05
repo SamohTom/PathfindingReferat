@@ -1,4 +1,5 @@
 import { TestScene } from "./testscene/TestScene.js";
+import { TestScene1 } from "./testscene/TestScene1.js";
 
 
 var config: Phaser.Types.Core.GameConfig = {
@@ -10,7 +11,7 @@ var config: Phaser.Types.Core.GameConfig = {
     },
     parent: 'game',
     scene: [
-        new TestScene()
+        new TestScene1()
     ],
     physics: {
       default: "arcade",
